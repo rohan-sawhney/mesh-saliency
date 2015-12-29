@@ -25,7 +25,7 @@ double Vertex::dualArea() const
 
 double Vertex::computeWeightedCurvature(std::stack<VertexIter>& stack, const double distance2)
 {
-    std::vector<bool> visitedNeighbors((int)sqDistances.size());
+    std::unordered_map<int, bool> visitedNeighbors;
     visitedNeighbors[index] = true;
     
     // initialize weighted gaussian curvatures
@@ -39,14 +39,14 @@ double Vertex::computeWeightedCurvature(std::stack<VertexIter>& stack, const dou
         
         HalfEdgeIter h = v->he;
         do {
-            VertexIter nv = h->flip->vertex;
+            int vIndex = h->flip->vertex->index;
             
-            int vIndex = nv->index;
             if (!visitedNeighbors[vIndex]) {
+                VertexIter nv = h->flip->vertex;
                 
                 if (sqDistances[vIndex] == 0.0) { // cache vertex distances
                     sqDistances[vIndex] = (nv->position - position).squaredNorm();
-                    if (nv->sqDistances[index] == 0.0) nv->sqDistances[index] = sqDistances[vIndex];
+                    nv->sqDistances[index] = sqDistances[vIndex];
                 } 
                 
                 if (sqDistances[vIndex] < 4 * distance2) {
@@ -72,10 +72,13 @@ bool Vertex::isPeakSaliency(const std::vector<double>& levelSaliencies) const
 {
     HalfEdgeIter h = he;
     do {
-        if (levelSaliencies[index] < levelSaliencies[h->flip->vertex->index]) {
-            return false;
+        if (levelSaliencies.empty()) {
+            if (saliency < h->flip->vertex->saliency) return false;
+            
+        } else {
+            if (levelSaliencies[index] < levelSaliencies[h->flip->vertex->index]) return false;
         }
-        
+    
         h = h->flip->next;
         
     } while (h != he);

@@ -160,7 +160,6 @@ bool MeshIO::buildMesh(const MeshData& data, Mesh& mesh)
         VertexIter vertex = mesh.vertices.insert(mesh.vertices.end(), Vertex());
         vertex->position = data.positions[i];
         vertex->he = isolated.begin();
-        vertex->sqDistances.resize(data.positions.size());
         indexToVertex[i] = vertex;
     }
     

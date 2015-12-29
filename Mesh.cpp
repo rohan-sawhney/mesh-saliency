@@ -88,10 +88,16 @@ void Mesh::computeMeanCurvature()
 
 void Mesh::computeSaliency(const int levels)
 {
+    int count = (int)vertices.size();
+    double minSaliency = INFINITY;
+    double maxSaliency = -INFINITY;
+    std::stack<VertexIter> stack;
+    std::vector<double> levelSaliencies(count);
+    
     // 1: compute mean curvature
     computeMeanCurvature();
     
-    // 2: compute extent
+    // 2: initialize and compute extent
     BoundingBox bbox;
     for (VertexIter v = vertices.begin(); v != vertices.end(); v++) {
         bbox.expandToInclude(v->position);
@@ -99,33 +105,31 @@ void Mesh::computeSaliency(const int levels)
     double extent = 0.003 * 0.003 * bbox.extent.squaredNorm();
     
     // 3
-    double minSaliency = INFINITY;
-    double maxSaliency = -INFINITY;
-    std::vector<double> levelSaliencies((int)vertices.size());
-    std::stack<VertexIter> stack;
-    
     for (int i = 0; i < levels; i++) {
-        
-        double minLevelSaliency = INFINITY;
-        double maxLevelSaliency = -INFINITY;
-        double meanLocalMaxSaliency = 0.0;
+        double sumSaliency = 0.0;
         
         // compute level saliencies
         double distance2 = (i+2)*(i+2)*extent;
         for (VertexIter v = vertices.begin(); v != vertices.end(); v++) {
-            v->saliency = 0.0;
             
             stack.push(v); double weightedCurvature1 = v->computeWeightedCurvature(stack, distance2);
             stack.push(v); double weightedCurvature2 = v->computeWeightedCurvature(stack, 4*distance2);
             
             levelSaliencies[v->index] = std::abs(weightedCurvature1 - weightedCurvature2);
-            
-            if (levelSaliencies[v->index] < minLevelSaliency) minLevelSaliency = levelSaliencies[v->index];
+            sumSaliency += levelSaliencies[v->index];
+            std::cout << "v: " << v->index << std::endl;
+        }
+        
+        // normalize
+        double maxLevelSaliency = -INFINITY;
+        for (VertexIter v = vertices.begin(); v != vertices.end(); v++) {
+            levelSaliencies[v->index] /= sumSaliency;
             if (maxLevelSaliency < levelSaliencies[v->index]) maxLevelSaliency = levelSaliencies[v->index];
         }
         
         // compute mean of local maxima
         double peaks = 0.0;
+        double meanLocalMaxSaliency = 0.0;
         for (VertexIter v = vertices.begin(); v != vertices.end(); v++) {
             if (v->isPeakSaliency(levelSaliencies) && levelSaliencies[v->index] != maxLevelSaliency) {
                 meanLocalMaxSaliency += levelSaliencies[v->index];
@@ -134,11 +138,9 @@ void Mesh::computeSaliency(const int levels)
         }
         meanLocalMaxSaliency /= peaks;
         
-        // normalize and apply non-linear suppression operator to level saliency
-        double dLevelSaliency = maxLevelSaliency - minLevelSaliency;
+        // apply non-linear suppression operator to level saliency
         double suppressionFactor = pow(maxLevelSaliency - meanLocalMaxSaliency, 2);
         for (VertexIter v = vertices.begin(); v != vertices.end(); v++) {
-            levelSaliencies[v->index] = (levelSaliencies[v->index] - minLevelSaliency) / dLevelSaliency;
             v->saliency += levelSaliencies[v->index] * suppressionFactor;
             
             if (i+1 == levels) {

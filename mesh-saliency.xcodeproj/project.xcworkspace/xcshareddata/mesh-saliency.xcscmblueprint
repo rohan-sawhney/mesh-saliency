@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "EC9DA7A88959A487C1BAF2C09F2BC6A7749A31C0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "EC9DA7A88959A487C1BAF2C09F2BC6A7749A31C0" : 0,
+    "93012211585513E702385219484BD8E8D4D7E84E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7ACCEF18-2974-43C4-BD35-7A699C82CAB8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "EC9DA7A88959A487C1BAF2C09F2BC6A7749A31C0" : "mesh-saliency\/",
+    "93012211585513E702385219484BD8E8D4D7E84E" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "mesh-saliency",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "mesh-saliency.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rohan-sawhney\/medial-axis-transform-2d.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "93012211585513E702385219484BD8E8D4D7E84E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rohan-sawhney\/mesh-saliency.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EC9DA7A88959A487C1BAF2C09F2BC6A7749A31C0"
+    }
+  ]
+}

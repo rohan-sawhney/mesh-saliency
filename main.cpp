@@ -23,8 +23,10 @@ std::string path = "/Users/rohansawhney/Desktop/developer/C++/mesh-saliency/arma
 int idx = 0;
 int levels = 5;
 Mesh mesh;
+double cutoffSaliency = 0.65;
 bool success = true;
 bool computedSaliency = false;
+bool drawInterestsPoints = false;
 
 void printInstructions()
 {
@@ -33,6 +35,7 @@ void printInstructions()
               << "↑/↓: move in/out\n"
               << "w/s: move up/down\n"
               << "a/d: move left/right\n"
+              << "h  : toggle interest points"
               << "escape: exit program\n"
               << std::endl;
 }
@@ -45,23 +48,38 @@ void init()
 
 void draw()
 {
-    glBegin(GL_LINES);
     for (EdgeCIter e = mesh.edges.begin(); e != mesh.edges.end(); e ++) {
         
+        VertexIter a = e->he->vertex;
+        VertexIter b = e->he->flip->vertex;
+        
+        glLineWidth(1.0);
+        glBegin(GL_LINES);
         if (computedSaliency) {
-            double color = (e->he->vertex->saliency + e->he->flip->vertex->saliency) / 2.0;
-            glColor4f(color, 0.0, 0.0, 0.5);
+            double color = (a->saliency + b->saliency) / 2.0;
+            glColor4f(0.0, 0.0, color, 0.5);
             
         } else glColor4f(0.0, 0.0, 1.0, 0.5);
         
-        Eigen::Vector3d a = e->he->vertex->position;
-        Eigen::Vector3d b = e->he->flip->vertex->position;
+        glVertex3d(a->position.x(), a->position.y(), a->position.z());
+        glVertex3d(b->position.x(), b->position.y(), b->position.z());
+        glEnd();
         
-        glVertex3d(a.x(), a.y(), a.z());
-        glVertex3d(b.x(), b.y(), b.z());
+        
+        glPointSize(4.0);
+        glColor4f(1.0, 1.0, 1.0, 0.5);
+        glBegin(GL_POINTS);
+        if (drawInterestsPoints) {
+            if (a->saliency > cutoffSaliency && a->isPeakSaliency()) {
+                glVertex3d(a->position.x(), a->position.y(), a->position.z());
+            }
+            
+            if (b->saliency > cutoffSaliency && b->isPeakSaliency()) {
+                glVertex3d(b->position.x(), b->position.y(), b->position.z());
+            }
+        }
+        glEnd();
     }
-    
-    glEnd();
 }
 
 void display()
@@ -105,14 +123,19 @@ void keyboard(unsigned char key, int x0, int y0)
         case 's':
             y -= 0.03;
             break;
+        case 'h':
+            drawInterestsPoints = !drawInterestsPoints;
+            break;
         case 'r':
             success = mesh.read(path);
             computedSaliency = false;
+            drawInterestsPoints = false;
             break;
         case ' ':
             if (success) {
                 mesh.computeSaliency(levels);
                 computedSaliency = true;
+                drawInterestsPoints = true;
             }
             break;
     }

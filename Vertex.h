@@ -20,8 +20,8 @@ public:
     // saliency
     double saliency;
     
-    // squared distances to vertices
-    std::vector<double> sqDistances;
+    // vertex distances
+    std::unordered_map<int, double> sqDistances;
     
     // checks if vertex is contained in any edge or face
     bool isIsolated() const;
@@ -33,7 +33,7 @@ public:
     double computeWeightedCurvature(std::stack<VertexIter>& stack, const double distance2);
     
     // checks is saliency is a maximum in local neighborhood
-    bool isPeakSaliency(const std::vector<double>& levelSaliencies) const;
+    bool isPeakSaliency(const std::vector<double>& levelSaliencies = std::vector<double>()) const;
 };
 
 #endif

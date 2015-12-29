@@ -16,7 +16,7 @@
 		322166B71C282FCF00888EE6 /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 322166B51C282FCF00888EE6 /* Vertex.cpp */; };
 		322166B91C28314A00888EE6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322166B81C28314A00888EE6 /* OpenGL.framework */; };
 		322166BB1C28314F00888EE6 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322166BA1C28314F00888EE6 /* GLUT.framework */; };
-		3260916B1C2BF8E800B8AD63 /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326091691C2BF8E800B8AD63 /* BoundingBox.cpp */; };
+		3244D8711C33093300B88DC5 /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3244D86F1C33093300B88DC5 /* BoundingBox.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,8 +49,8 @@
 		322166B61C282FCF00888EE6 /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
 		322166B81C28314A00888EE6 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		322166BA1C28314F00888EE6 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
-		326091691C2BF8E800B8AD63 /* BoundingBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBox.cpp; sourceTree = "<group>"; };
-		3260916A1C2BF8E800B8AD63 /* BoundingBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBox.h; sourceTree = "<group>"; };
+		3244D86F1C33093300B88DC5 /* BoundingBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBox.cpp; sourceTree = "<group>"; };
+		3244D8701C33093300B88DC5 /* BoundingBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBox.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +85,8 @@
 				322166B41C282FCF00888EE6 /* Types.h */,
 				322166B51C282FCF00888EE6 /* Vertex.cpp */,
 				322166B61C282FCF00888EE6 /* Vertex.h */,
-				326091691C2BF8E800B8AD63 /* BoundingBox.cpp */,
-				3260916A1C2BF8E800B8AD63 /* BoundingBox.h */,
+				3244D86F1C33093300B88DC5 /* BoundingBox.cpp */,
+				3244D8701C33093300B88DC5 /* BoundingBox.h */,
 				3221669A1C282F7B00888EE6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 				322166AE1C282FBB00888EE6 /* Edge.cpp in Sources */,
 				322166B31C282FBB00888EE6 /* MeshIO.cpp in Sources */,
 				322166B21C282FBB00888EE6 /* Mesh.cpp in Sources */,
-				3260916B1C2BF8E800B8AD63 /* BoundingBox.cpp in Sources */,
+				3244D8711C33093300B88DC5 /* BoundingBox.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,10 +30,11 @@ public:
     double dualArea() const;
     
     // computes saliency given cut-off distance
-    double computeWeightedCurvature(std::stack<VertexIter>& stack, const double distance2);
+    double computeWeightedCurvature(VertexIter root, const double distance2);
     
     // checks is saliency is a maximum in local neighborhood
-    bool isPeakSaliency(const std::vector<double>& levelSaliencies = std::vector<double>()) const;
+    bool isPeakSaliency(VertexIter root,
+                        const std::vector<double>& levelSaliencies = std::vector<double>()) const;
 };
 
 #endif

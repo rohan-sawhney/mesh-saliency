@@ -23,7 +23,7 @@ public:
     bool write(const std::string& fileName) const;
     
     // computes mesh saliency
-    void computeSaliency(const int levels);
+    void computeSaliency();
     
     // member variables
     std::vector<HalfEdge> halfEdges;

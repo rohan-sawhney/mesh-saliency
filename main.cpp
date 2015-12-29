@@ -21,9 +21,8 @@ double r = 2.5, theta = 0.0, phi = 0.0;
 
 std::string path = "/Users/rohansawhney/Desktop/developer/C++/mesh-saliency/armadillo.obj";
 int idx = 0;
-int levels = 5;
 Mesh mesh;
-double cutoffSaliency = 0.65;
+double cutoffSaliency = 0.75;
 bool success = true;
 bool computedSaliency = false;
 bool drawInterestsPoints = false;
@@ -31,7 +30,7 @@ bool drawInterestsPoints = false;
 void printInstructions()
 {
     std::cerr << "' ': compute saliency"
-              << "→/←: increase/decrease saliency levels\n"
+              << "→/←: increase/decrease cutoff saliency\n"
               << "↑/↓: move in/out\n"
               << "w/s: move up/down\n"
               << "a/d: move left/right\n"
@@ -70,11 +69,11 @@ void draw()
         glColor4f(1.0, 1.0, 1.0, 0.5);
         glBegin(GL_POINTS);
         if (drawInterestsPoints) {
-            if (a->saliency > cutoffSaliency && a->isPeakSaliency()) {
+            if (a->saliency > cutoffSaliency && a->isPeakSaliency(a)) {
                 glVertex3d(a->position.x(), a->position.y(), a->position.z());
             }
             
-            if (b->saliency > cutoffSaliency && b->isPeakSaliency()) {
+            if (b->saliency > cutoffSaliency && b->isPeakSaliency(b)) {
                 glVertex3d(b->position.x(), b->position.y(), b->position.z());
             }
         }
@@ -133,7 +132,7 @@ void keyboard(unsigned char key, int x0, int y0)
             break;
         case ' ':
             if (success) {
-                mesh.computeSaliency(levels);
+                mesh.computeSaliency();
                 computedSaliency = true;
                 drawInterestsPoints = true;
             }
@@ -183,16 +182,17 @@ void special(int i, int x0, int y0)
             eyeZ -= 0.03;
             break;
         case GLUT_KEY_LEFT:
-            levels--;
-            if (levels < 1) levels = 1;
+            cutoffSaliency -= 0.05;
+            if (cutoffSaliency < 0.0) cutoffSaliency = 0.0;
             break;
         case GLUT_KEY_RIGHT:
-            levels ++;
+            cutoffSaliency += 0.05;
+            if (cutoffSaliency > 1.0) cutoffSaliency = 1.0;
             break;
     }
     
     std::stringstream title;
-    title << "Mesh Saliency, Levels: " << levels;
+    title << "Mesh Saliency, Cut Off: " << cutoffSaliency;
     glutSetWindowTitle(title.str().c_str());
     
     glutPostRedisplay();
@@ -207,7 +207,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutInit(&argc, argv);
     std::stringstream title;
-    title << "Mesh Saliency, Levels: " << levels;
+    title << "Mesh Saliency, Cut Off: " << cutoffSaliency;
     glutCreateWindow(title.str().c_str());
     init();
     glutDisplayFunc(display);

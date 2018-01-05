@@ -4,4 +4,4 @@ Implements Mesh Saliency by Lee et al., a human perception inspired importance m
 
 ![](saliency.png)
 
-Note: Requires Eigen 3.2.4 and assumes it is in /usr/local/Cellar/eigen/3.2.4/include/eigen3/
+Note: Assumes Eigen 3.2.4 is in /usr/local/Cellar/eigen/3.2.4/include/eigen3/
